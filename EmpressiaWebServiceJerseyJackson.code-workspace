@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "EmpressiaWebServiceJerseyJackson"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "automatic"
+	}
+}
