@@ -1,0 +1,68 @@
+plugins {
+	id "java";
+	id "maven-publish";
+}
+
+ext.moduleName = "jp.empressia.enterprise.ws";
+// ext.upload_repository_url;
+// ext.version;
+
+repositories {
+	jcenter();
+}
+
+dependencies {
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding "UTF-8";
+	options.compilerArgs << "-parameters";
+}
+
+jar {
+	archiveBaseName = moduleName;
+	manifest {
+		attributes (
+			"Automatic-Module-Name": moduleName
+		);
+	}
+}
+
+javadoc {
+	source = sourceSets.main.allJava;
+	options.charSet "UTF-8";
+	options.encoding "UTF-8";
+	options.addStringOption("Xdoclint:none", "-quiet");
+}
+task javadocJar(type: Jar) {
+	archiveBaseName = jar.archiveBaseName;
+	classifier "javadoc";
+	from javadoc.destinationDir;
+}
+javadocJar.dependsOn(tasks.javadoc);
+task sourcesJar(type: Jar) {
+	archiveBaseName = jar.archiveBaseName;
+	classifier "sources";
+	from sourceSets.main.allSource;
+}
+artifacts {
+	archives javadocJar;
+	archives sourcesJar;
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			groupId = "jp.empressia";
+			artifactId = moduleName;
+			from components.java;
+			artifact javadocJar;
+			artifact sourcesJar;
+		}
+	}
+	repositories {
+		maven {
+			url = upload_repository_url;
+		}
+	}
+}
