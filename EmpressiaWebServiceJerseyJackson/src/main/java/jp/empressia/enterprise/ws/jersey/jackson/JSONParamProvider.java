@@ -90,7 +90,7 @@ public class JSONParamProvider implements ValueParamProvider {
 					return LocalDateTime.parse(node.asText());
 				} else if(c.equals(LocalDate.class)) {
 					return LocalDate.parse(node.asText());
-				} else if(c.equals(JsonNode.class)) {
+				} else if(JsonNode.class.isAssignableFrom(c)) {
 					return node;
 				} else {
 					return node;
