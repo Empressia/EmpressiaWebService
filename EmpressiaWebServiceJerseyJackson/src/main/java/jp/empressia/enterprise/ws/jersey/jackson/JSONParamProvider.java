@@ -82,6 +82,10 @@ public class JSONParamProvider implements ValueParamProvider {
 					return node.asBoolean();
 				} else if(c.equals(Boolean.class)) {
 					return Boolean.valueOf(node.asBoolean());
+				} else if(c.equals(double.class)) {
+					return node.asDouble();
+				} else if(c.equals(Double.class)) {
+					return Double.valueOf(node.asDouble());
 				} else if(c.equals(LocalDateTime.class)) {
 					return LocalDateTime.parse(node.asText());
 				} else if(c.equals(LocalDate.class)) {
