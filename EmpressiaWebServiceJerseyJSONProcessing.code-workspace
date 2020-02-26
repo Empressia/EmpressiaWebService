@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "EmpressiaWebServiceJerseyJSONProcessing"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "automatic"
+	}
+}
