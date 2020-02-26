@@ -16,6 +16,6 @@ import java.lang.annotation.Target;
 public @interface JSONParam {
 
     /** 目的の値までの名前の配列です。 */
-    String[] value() default "";
+    String[] value() default {};
 
 }
