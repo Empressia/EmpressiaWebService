@@ -13,7 +13,7 @@ repositories {
 
 dependencies {
 	// use Empressia WebService.
-	implementation(group:"jp.empressia", name:"jp.empressia.enterprise.ws", version:"1.0.0");
+	implementation(group:"jp.empressia", name:"jp.empressia.enterprise.ws", version:"1.1.0");
 	// use JAX-RS.
 	implementation(group:"javax.ws.rs", name:"javax.ws.rs-api", version:"2.1.1");
 	// use Jersey.
