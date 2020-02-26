@@ -57,13 +57,10 @@ public class JSONParamProvider implements ValueParamProvider {
 				return null;
 			}
 			JsonNode node = entity;
-			if((propertyNames.length == 1) && propertyNames[0].length() == 0) {
-			} else {
-				for(String propertyName : propertyNames) {
-					node = node.get(propertyName);
-					if(node == null) {
-						return null;
-					}
+			for(String propertyName : propertyNames) {
+				node = node.get(propertyName);
+				if(node == null) {
+					return null;
 				}
 			}
 			Class<?> c = parameter.getRawType();
