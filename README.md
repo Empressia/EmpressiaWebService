@@ -45,13 +45,13 @@ Gradleであれば、例えば、以下のように設定します。
 * JSON-Pベースで使用する場合
 	```groovy
 		// use Empressia WebService.
-		implementation(group:"jp.empressia", name:"jp.empressia.enterprise.ws.jersey.jsonp", version:"1.1.0");
+		implementation(group:"jp.empressia", name:"jp.empressia.enterprise.ws.jersey.jsonp", version:"1.1.1");
 	```
 
 * Jacksonベースで使用する場合
 	```groovy
 		// use Empressia WebService.
-		implementation(group:"jp.empressia", name:"jp.empressia.enterprise.ws.jersey.jackson", version:"1.1.0");
+		implementation(group:"jp.empressia", name:"jp.empressia.enterprise.ws.jersey.jackson", version:"1.1.1");
 	```
 
 各サーバーに含まれるライブラリがある場合は、適宜、provided指定を追加してください。  
