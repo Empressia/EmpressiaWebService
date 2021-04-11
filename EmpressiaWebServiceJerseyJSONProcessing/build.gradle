@@ -1,20 +1,21 @@
 plugins {
 	id "java";
 	id "java-library";
+	id "signing";
 	id "maven-publish";
 }
 
 ext.moduleName = "jp.empressia.enterprise.ws.jersey.jsonp";
-// ext.upload_repository_url;
+// ext.local_network_repository_url;
 // ext.version;
 
 repositories {
-	jcenter();
+	mavenCentral();
 }
 
 dependencies {
 	// use Empressia WebService.
-	api(group:"jp.empressia", name:"jp.empressia.enterprise.ws", version:"1.1.0");
+	api(group:"jp.empressia", name:"jp.empressia.enterprise.ws", version:"1.1.2");
 	// use JAX-RS.
 	implementation(group:"javax.ws.rs", name:"javax.ws.rs-api", version:"2.1.1");
 	// use Jersey.
@@ -28,6 +29,11 @@ tasks.withType(JavaCompile) {
 	options.compilerArgs << "-parameters";
 }
 
+java {
+	withJavadocJar();
+	withSourcesJar();
+}
+
 jar {
 	archiveBaseName = moduleName;
 	manifest {
@@ -38,25 +44,10 @@ jar {
 }
 
 javadoc {
-	source = sourceSets.main.allJava;
 	options.charSet "UTF-8";
 	options.encoding "UTF-8";
+	options.addBooleanOption("html5", true);
 	options.addStringOption("Xdoclint:none", "-quiet");
-}
-task javadocJar(type: Jar) {
-	archiveBaseName = jar.archiveBaseName;
-	classifier "javadoc";
-	from javadoc.destinationDir;
-}
-javadocJar.dependsOn(tasks.javadoc);
-task sourcesJar(type: Jar) {
-	archiveBaseName = jar.archiveBaseName;
-	classifier "sources";
-	from sourceSets.main.allSource;
-}
-artifacts {
-	archives javadocJar;
-	archives sourcesJar;
 }
 
 publishing {
@@ -65,13 +56,54 @@ publishing {
 			groupId = "jp.empressia";
 			artifactId = moduleName;
 			from components.java;
-			artifact javadocJar;
-			artifact sourcesJar;
+			// for Maven Central.
+			pom {
+				name = "EmpressiaWebServiceJerseyJSONProcessing";
+				description = "JAX-RS（Jakarta WebService）用のライブラリです。";
+				url = "https://github.com/Empressia/EmpressiaWebServie/EmpressiaWebServiceJerseyJSONProcessing";
+				licenses {
+					license {
+						name = "zlib License";
+						comments = "If you want to use this with a team (multiple people), select the MIT license.";
+					}
+					license {
+						name = "MIT License";
+						comments = "If you want to use this with a team (multiple people), select the MIT license.";
+					}
+				}
+				developers {
+					developer {
+						// The unique ID of this developer in the SCM.
+						id = "Empressia";
+					}
+				}
+				scm {
+					connection = "scm:git:https://github.com/Empressia/EmpressiaWebServie.git"
+					url = "https://github.com/Empressia/EmpressiaWebServie.git"
+				}
+			}
 		}
 	}
 	repositories {
+		// publishMavenPublicationToLocalNetworkRepository
 		maven {
-			url = upload_repository_url;
+			name = "LocalNetwork";
+			url = local_network_repository_url;
+		}
+		// publishMavenPublicationToMavenCentralRepository
+		maven {
+			name = "MavenCentral";
+			def releasesRepoUrl = sonatype_release_repository_url;
+			def snapshotsRepoUrl = sonatype_snapshot_repository_url;
+			url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl;
+			credentials {
+				username = sonatype_username;
+				password = sonatype_password;
+			}
 		}
 	}
+}
+
+signing {
+	sign publishing.publications.maven;
 }
